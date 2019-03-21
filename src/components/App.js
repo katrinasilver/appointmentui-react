@@ -5,6 +5,7 @@ import AddAppointments from './AddAppointments'
 import SearchAppointments from './SearchAppointments'
 import ListAppointments from './ListAppointments'
 
+import { without } from 'lodash'
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -36,6 +37,12 @@ export default class App extends Component {
     }
   }
 
+  handleDelete = id => {
+    let appointments = this.state.appointments
+    appointments = without(appointments, id)
+    this.setState({ appointments })
+  }
+
   render() {
 
     return (
@@ -47,14 +54,19 @@ export default class App extends Component {
               <AddAppointments />
               <SearchAppointments />
 
-              {/* Use below if you want props to have a name reference on child component. 
-              Usually better for if your child component will eventually have state */}
-              {/* <ListAppointments appointment={this.state.appointments} /> */}
-              {
+              <ListAppointments 
+                appointment={this.state.appointments} 
+                handleDelete={this.handleDelete}
+              />
+              
+              {/* Use below for stateless components
+                {
                 this.state.appointments.map(appt => 
-                  <ListAppointments key={appt.id} id={appt.id} {...appt} />
+                  <ListAppointments key={appt.id} id={appt.id} 
+                    {...appt} handleDelete={this.handleDelete}
+                  />
                 )
-              }
+              } */}
             </div>
           </div>
         </div>
