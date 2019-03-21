@@ -16,7 +16,7 @@ export default class App extends Component {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     try {
       const response = await fetch('./data.json')
       const appointments = await response.json()
@@ -37,9 +37,12 @@ export default class App extends Component {
     }
   }
 
-  handleDelete = id => {
+  handleDelete = item => {
+    // let appointments = this.state.appointments.filter(a => a !== item) //without lodash
+
     let appointments = this.state.appointments
-    appointments = without(appointments, id)
+    appointments = without(appointments, item)
+
     this.setState({ appointments })
   }
 
@@ -58,7 +61,7 @@ export default class App extends Component {
                 appointment={this.state.appointments} 
                 handleDelete={this.handleDelete}
               />
-              
+
               {/* Use below for stateless components
                 {
                 this.state.appointments.map(appt => 
