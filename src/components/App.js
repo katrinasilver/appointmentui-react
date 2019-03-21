@@ -12,7 +12,8 @@ export default class App extends Component {
 
     this.state = {
       appointments: [],
-      lastidx: 1
+      lastidx: 1,
+      collapse: false
     }
   }
 
@@ -42,8 +43,13 @@ export default class App extends Component {
 
     let appointments = this.state.appointments
     appointments = without(appointments, item)
-
     this.setState({ appointments })
+  }
+
+  toggleForm = () => {
+    this.setState({
+      collapse: !this.state.collapse
+    })
   }
 
   render() {
@@ -54,7 +60,10 @@ export default class App extends Component {
         <div className="row">
           <div className="col-md-12 bg-white">
             <div className="container">
-              <AddAppointments />
+              <AddAppointments 
+                collapse={this.state.collapse}
+                toggleForm={this.toggleForm}
+              />
               <SearchAppointments />
 
               <ListAppointments 
