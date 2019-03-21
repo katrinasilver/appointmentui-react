@@ -10,7 +10,8 @@ export default class App extends Component {
     super(props)
 
     this.state = {
-      appointments: []
+      appointments: [],
+      lastidx: 1
     }
   }
 
@@ -18,7 +19,15 @@ export default class App extends Component {
     try {
       const response = await fetch('./data.json')
       const appointments = await response.json()
-      appointments.map(item => item)
+
+      appointments.map((item) => {
+
+        //inject an index
+        item.id = this.state.lastidx
+        this.setState({ lastidx: this.state.lastidx + 1 })
+        return item
+
+      })
 
       this.setState({ appointments })
 
@@ -35,13 +44,15 @@ export default class App extends Component {
         <div className="row">
           <div className="col-md-12 bg-white">
             <div className="container">
-    
               <AddAppointments />
               <SearchAppointments />
+
+              {/* Use below if you want props to have a name reference on child component. 
+              Usually better for if your child component will eventually have state */}
               {/* <ListAppointments appointment={this.state.appointments} /> */}
               {
-                this.state.appointments.map((appt, i) => 
-                  <ListAppointments key={i} id={i} {...appt} />
+                this.state.appointments.map(appt => 
+                  <ListAppointments key={appt.id} id={appt.id} {...appt} />
                 )
               }
             </div>

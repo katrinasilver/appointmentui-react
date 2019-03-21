@@ -15,7 +15,7 @@
   border-bottom: 1px dotted gray;
 }
 
-.appointment-list .pet-item:last-child {
+.appointment-list:last-child .pet-item {
   border-bottom: none;
 }
 
