@@ -39,7 +39,6 @@ export default class App extends Component {
               <AddAppointments />
               <SearchAppointments />
               {/* <ListAppointments appointment={this.state.appointments} /> */}
-
               {
                 this.state.appointments.map((appt, i) => 
                   <ListAppointments key={i} id={i} {...appt} />
