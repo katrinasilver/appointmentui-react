@@ -69,12 +69,12 @@ export default class App extends Component {
   }
 
   handleEdit = (name, val, id) => {
-    let appt = this.state.appointments
-    let aptid = findIndex(this.state.appointments, { id })
-    appt[aptid][name] = val
+    let appointments = this.state.appointments
+    let idx = findIndex(this.state.appointments, { id })
+    appointments[idx][name] = val
     
     this.setState({
-      appointments: appt
+      appointments
     })
   }
 
