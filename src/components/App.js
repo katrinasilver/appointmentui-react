@@ -21,18 +21,13 @@ export default class App extends Component {
     try {
       const response = await fetch('./data.json')
       const appointments = await response.json()
-
       appointments.map((item) => {
-
         //inject an index
         item.id = this.state.lastidx
         this.setState({ lastidx: this.state.lastidx + 1 })
         return item
-
       })
-
       this.setState({ appointments })
-
     } catch(err) {
       console.error(err)
     }
@@ -52,6 +47,14 @@ export default class App extends Component {
     })
   }
 
+  addAppointment = appt => {
+    appt.id = this.state.lastidx // assign an index to new item
+    this.setState({
+      appointments: [ appt, ...this.state.appointments ],
+      lastidx: this.state.lastidx + 1
+    })
+  }
+
   render() {
 
     return (
@@ -63,6 +66,7 @@ export default class App extends Component {
               <AddAppointments 
                 collapse={this.state.collapse}
                 toggleForm={this.toggleForm}
+                addAppointment={this.addAppointment}
               />
               <SearchAppointments />
 

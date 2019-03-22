@@ -4,8 +4,6 @@ import Moment from 'react-moment'
 
 export default class ListAppointments extends Component {
   render() {
-    // const { petName, aptDate, ownerName, aptNotes, id } = this.props
-
     return (
       <div className="appointment-list item-list mb-3">
 
@@ -14,7 +12,7 @@ export default class ListAppointments extends Component {
           <div className="pet-item col media py-3" key={item.id}>
             <div className="mr-3">
               <button className="pet-delete btn btn-sm btn-danger"
-                onClick={(e) => this.props.handleDelete(item)}
+                onClick={() => this.props.handleDelete(item)}
               >
                 <FaTimes />
               </button>
@@ -24,7 +22,9 @@ export default class ListAppointments extends Component {
               <div className="pet-head d-flex">
                 <span className="pet-name">{ item.petName }</span>
                 <span className="apt-date ml-auto">
-                  <Moment date={ item.aptDate } parse='YYYY-MM-dd hh:mm' format='MMM D, YYYY h:mma' />
+                  <Moment date={ item.aptDate } 
+                  format='MMM DD, YYYY h:mma' 
+                  />
                 </span>
               </div>
 
