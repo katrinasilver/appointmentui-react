@@ -83,13 +83,16 @@ export default class App extends Component {
                 addAppointment={this.addAppointment}
               />
 
-              <SearchAppointments />
+              <SearchAppointments 
+                orderBy={this.state.orderBy}
+                orderDir={this.state.orderDir}
+              />
 
               <ListAppointments 
                 appointment={filterApts} 
                 handleDelete={this.handleDelete}
               />
-              
+
             </div>
           </div>
         </div>
