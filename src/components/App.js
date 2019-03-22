@@ -15,7 +15,8 @@ export default class App extends Component {
       lastidx: 1,
       collapse: false,
       orderBy: 'petName',
-      orderDir: 'asc'
+      orderDir: 'asc',
+      searchVal: ''
     }
   }
 
@@ -63,6 +64,10 @@ export default class App extends Component {
     })
   }
 
+  handleSearch = searchVal => {
+    this.setState({ searchVal })
+  }
+
   render() {
 
     let order
@@ -71,10 +76,18 @@ export default class App extends Component {
     if (this.state.orderDir === 'asc') order = 1
     else order = -1
 
-    filterApts.sort((a,b) => {
+    filterApts = filterApts.sort((a,b) => {
+
       if (a[this.state.orderBy].toLowerCase() < b[this.state.orderBy].toLowerCase()) {
         return -1 * order //multiply to reverse sort based on asc or des
       } else return 1 * order
+
+    }).filter(item => {
+
+      return Object.values(item).reduce((acc,val) => acc || (typeof val === 'string' &&
+        val.toLowerCase().includes(this.state.searchVal.toLowerCase())
+      ), false)
+      
     })
 
     return (
@@ -93,12 +106,15 @@ export default class App extends Component {
                 orderBy={this.state.orderBy}
                 orderDir={this.state.orderDir}
                 changeOrder={this.changeOrder}
+                handleSearch={this.handleSearch}
               />
-
-              <ListAppointments 
-                appointment={filterApts} 
-                handleDelete={this.handleDelete}
-              />
+              {
+                filterApts.length === 0 ? <div className="item-list mb-3">Item not found</div> :
+                <ListAppointments 
+                  appointment={filterApts} 
+                  handleDelete={this.handleDelete}
+                />
+              }
 
             </div>
           </div>

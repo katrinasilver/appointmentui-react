@@ -23,6 +23,7 @@ export default class ListAppointments extends Component {
                 <span className="pet-name">{ item.petName }</span>
                 <span className="apt-date ml-auto">
                   <Moment date={ item.aptDate } 
+                  parse='YYYY-MM-DD hh:mm' 
                   format='MMM DD, YYYY h:mma' 
                   />
                 </span>
