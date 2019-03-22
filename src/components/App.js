@@ -5,7 +5,7 @@ import AddAppointments from './AddAppointments'
 import SearchAppointments from './SearchAppointments'
 import ListAppointments from './ListAppointments'
 
-import { without } from 'lodash'
+import { without, findIndex } from 'lodash'
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -68,6 +68,16 @@ export default class App extends Component {
     this.setState({ searchVal })
   }
 
+  handleEdit = (name, val, id) => {
+    let appt = this.state.appointments
+    let aptid = findIndex(this.state.appointments, { id })
+    appt[aptid][name] = val
+    
+    this.setState({
+      appointments: appt
+    })
+  }
+
   render() {
 
     let order
@@ -113,6 +123,7 @@ export default class App extends Component {
                 <ListAppointments 
                   appointment={filterApts} 
                   handleDelete={this.handleDelete}
+                  handleEdit={this.handleEdit}
                 />
               }
 
