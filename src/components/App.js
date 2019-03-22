@@ -13,7 +13,9 @@ export default class App extends Component {
     this.state = {
       appointments: [],
       lastidx: 1,
-      collapse: false
+      collapse: false,
+      orderBy: 'petName',
+      orderDir: 'asc'
     }
   }
 
@@ -57,6 +59,18 @@ export default class App extends Component {
 
   render() {
 
+    let order
+    let filterApts = this.state.appointments
+
+    if (this.state.orderDir === 'asc') order = 1
+    else order = -1
+
+    filterApts.sort((a,b) => {
+      if (a[this.state.orderBy].toLowerCase() < b[this.state.orderBy].toLowerCase()) {
+        return -1 * order //multiply to reverse sort based on asc or des
+      } else return 1 * order
+    })
+
     return (
      <main className="page bg-white" id="petratings">
       <div className="container">
@@ -68,21 +82,14 @@ export default class App extends Component {
                 toggleForm={this.toggleForm}
                 addAppointment={this.addAppointment}
               />
+
               <SearchAppointments />
 
               <ListAppointments 
-                appointment={this.state.appointments} 
+                appointment={filterApts} 
                 handleDelete={this.handleDelete}
               />
-
-              {/* Use below for stateless components
-                {
-                this.state.appointments.map(appt => 
-                  <ListAppointments key={appt.id} id={appt.id} 
-                    {...appt} handleDelete={this.handleDelete}
-                  />
-                )
-              } */}
+              
             </div>
           </div>
         </div>
