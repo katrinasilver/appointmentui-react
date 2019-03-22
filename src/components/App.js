@@ -57,6 +57,12 @@ export default class App extends Component {
     })
   }
 
+  changeOrder = (orderBy, orderDir) => {
+    this.setState({
+      orderBy, orderDir
+    })
+  }
+
   render() {
 
     let order
@@ -86,6 +92,7 @@ export default class App extends Component {
               <SearchAppointments 
                 orderBy={this.state.orderBy}
                 orderDir={this.state.orderDir}
+                changeOrder={this.changeOrder}
               />
 
               <ListAppointments 
